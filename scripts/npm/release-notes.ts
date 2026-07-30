@@ -39,7 +39,7 @@ if (!commits) {
   process.exit(0);
 }
 
-const prompt = `Summarize an npm release of "git-get" (a giget-backed \`git get\` subcommand for downloading a single file or folder from a repo without a full clone).
+const prompt = `Summarize an npm release of "git-gimme" (a giget-backed \`git gimme\` subcommand for downloading a single file or folder from a repo without a full clone).
 
 New version: ${version}
 Previous tag: ${prevTag || '(none)'}
@@ -94,7 +94,7 @@ if (firstEntry === -1) {
 const readme = await Bun.file(README).text();
 const rows = (taglRead(readme, 'WHATSNEW') ?? '')
   .split('\n')
-  .filter((line) => line.trim().startsWith('| `') && !line.trim().startsWith(`| \`${version}\``));
+  .filter((line: string) => line.trim().startsWith('| `') && !line.trim().startsWith(`| \`${version}\``));
 const table = [
   '| Version | Highlights |',
   '| ------- | ---------- |',

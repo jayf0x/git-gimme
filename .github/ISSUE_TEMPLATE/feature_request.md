@@ -13,7 +13,7 @@ assignees: ''
 ## Proposed usage
 
 ```
-git get <owner/repo|github-url> [dest] [--flag]
+git gimme <owner/repo|github-url> [dest] [--flag]
 ```
 
 ## Acceptance criteria

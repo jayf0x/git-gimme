@@ -1,10 +1,10 @@
 # AGENTS.md
 
-Working notes for agents/contributors on `git-get`.
+Working notes for agents/contributors on `git-gimme`.
 
 ## What this is
 
-A `git get` subcommand: thin wrapper around [giget](https://github.com/unjs/giget) that resolves
+A `git gimme` subcommand: thin wrapper around [giget](https://github.com/unjs/giget) that resolves
 plain `owner/repo` shorthand and pasted GitHub URLs to the real GitHub repo (not giget's template
 registry), resolves the real default branch instead of assuming `main`, and adds single-file
 downloads (giget only understands directories). Node/Bun only — no browser runtime.
@@ -17,7 +17,7 @@ downloads (giget only understands directories). Node/Bun only — no browser run
 - **`src/index.ts`** — `gitGet(input, options?)`: resolves the ref, then dispatches on `hint`
   (`dir` / `file` / `auto`). `auto` (ambiguous shorthand) tries directory mode first and falls back
   to file mode if nothing came down.
-- **`src/cli.ts`** — argv parsing for the `git get` binary; built to `dist/cli.js` with a shebang
+- **`src/cli.ts`** — argv parsing for the `git gimme` binary; built to `dist/cli.js` with a shebang
   banner (see `config/vite.config.ts`).
 
 ## Commands
@@ -34,7 +34,7 @@ bun run format        # biome check --write
 
 - Tests exercise the built output (`dist/cli.js`), not `src/` — `test`/`test:run` build first (see
   `package.json`). `tests/e2e.test.ts` spawns real network requests against
-  `jayf0x/git-folder/tests/fixtures/`.
+  `jayf0x/git-gimme/tests/fixtures/`.
 - Biome for format/lint (`biome.json` → `config/biome.json`). TS strict. `config/opengrep/` holds
   vendored security-scan rules (`scripts/opengrep-scan.sh`, scans `src/` only).
 - `config/vite.config.ts` builds two entries (`index`, `cli`) and externalizes `giget` + `node:*`.

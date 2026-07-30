@@ -8,10 +8,10 @@ import { promisify } from 'node:util';
 
 const run = promisify(execFile);
 const CLI = path.resolve(import.meta.dir, '../dist/cli.js');
-const REPO = 'jayf0x/git-folder';
+const REPO = 'jayf0x/git-gimme';
 
 async function withTmpDir(fn: (dir: string) => Promise<void>) {
-  const dir = await mkdtemp(path.join(tmpdir(), 'git-get-e2e-'));
+  const dir = await mkdtemp(path.join(tmpdir(), 'git-gimme-e2e-'));
   try {
     await fn(dir);
   } finally {
@@ -19,7 +19,7 @@ async function withTmpDir(fn: (dir: string) => Promise<void>) {
   }
 }
 
-describe('git-get CLI (dist/cli.js)', () => {
+describe('git-gimme CLI (dist/cli.js)', () => {
   test('directory download (tests/fixtures/)', async () => {
     await withTmpDir(async (cwd) => {
       await run('node', [CLI, `${REPO}/tests/fixtures`], { cwd });

@@ -11,7 +11,7 @@
     "forceConsistentCasingInFileNames": true,
     "types": ["bun-types"],
     "paths": {
-      "git-get": ["./src/index.ts"]
+      "git-gimme": ["./src/index.ts"]
     }
   },
   "include": ["src", "tests", "scripts"]
