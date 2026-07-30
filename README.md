@@ -11,6 +11,8 @@
 
 ![Preview](./assets/preview.png)
 
+> ༼ つ ◕_◕ ༽つ ⭐
+
 `git gimme <owner/repo|github-url> [dest]` — thin wrapper around [giget](https://github.com/unjs/giget)
 that fixes the rough edges you hit downloading a single file or subfolder from GitHub.
 
