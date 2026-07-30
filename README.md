@@ -9,6 +9,8 @@
 
 <!-- README_HEAD:END -->
 
+![Preview](./assets/preview.png)
+
 `git gimme <owner/repo|github-url> [dest]` — thin wrapper around [giget](https://github.com/unjs/giget)
 that fixes the rough edges you hit downloading a single file or subfolder from GitHub.
 
@@ -18,9 +20,11 @@ commands to `git-<name>` on PATH — no shell config needed).
 ## What's new
 
 <!-- WHATSNEW:START -->
-| Version | Highlights |
-| ------- | ---------- |
+
+| Version | Highlights                                                                    |
+| ------- | ----------------------------------------------------------------------------- |
 | `0.1.0` | Initial setup — `gitGet` / `git gimme` CLI, single-file + directory downloads |
+
 <!-- WHATSNEW:END -->
 
 Full history in [CHANGELOG.md](./CHANGELOG.md).
@@ -28,7 +32,7 @@ Full history in [CHANGELOG.md](./CHANGELOG.md).
 ## What it fixes vs. plain giget
 
 **Bare `owner/repo` doesn't mean what you'd expect.**
-giget treats `owner/repo` as a *template registry* lookup, not a GitHub repo — it 404s unless you
+giget treats `owner/repo` as a _template registry_ lookup, not a GitHub repo — it 404s unless you
 know to prefix `github:`. git-gimme always resolves plain shorthand and pasted GitHub URLs straight
 to the GitHub provider.
 
@@ -75,15 +79,15 @@ git gimme <owner/repo | github-url> [dest] [--ignore=pattern,pattern]
 ## API
 
 ```ts
-import { gitGet } from 'git-gimme';
+import { gitGet } from "git-gimme";
 ```
 
 ### `gitGet(input, options?)`
 
-| Option   | Type     | Default | What it does                                                       |
-| -------- | -------- | ------- | ------------------------------------------------------------------- |
-| `dest`   | `string` | —       | Where to write the file/folder. Defaults to the repo or basename.    |
-| `ignore` | `string` | —       | Comma-separated glob excludes, forwarded to giget.                   |
+| Option   | Type     | Default | What it does                                                      |
+| -------- | -------- | ------- | ----------------------------------------------------------------- |
+| `dest`   | `string` | —       | Where to write the file/folder. Defaults to the repo or basename. |
+| `ignore` | `string` | —       | Comma-separated glob excludes, forwarded to giget.                |
 
 Returns `{ dir, files }` — the resolved output path and how many files landed there.
 
