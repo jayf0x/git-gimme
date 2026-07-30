@@ -1,6 +1,6 @@
 ---
 name: Bug
-about: Something broken in git-get
+about: Something broken in git-gimme
 title: 'bug: <short description>'
 labels: 'type:bug'
 assignees: ''
@@ -21,7 +21,7 @@ assignees: ''
 ## Reproduce
 
 ```
-git get <owner/repo|github-url> [dest]
+git gimme <owner/repo|github-url> [dest]
 ```
 
 ## Expected vs actual

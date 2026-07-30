@@ -6,7 +6,7 @@ const ignoreArg = args.find((a) => a.startsWith('--ignore='));
 const [input, dest] = positional;
 
 if (!input) {
-  console.error('usage: git get <owner/repo | github-url> [dest] [--ignore=pattern,pattern]');
+  console.error('usage: git gimme <owner/repo | github-url> [dest] [--ignore=pattern,pattern]');
   process.exit(1);
 }
 

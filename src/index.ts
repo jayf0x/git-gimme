@@ -46,7 +46,7 @@ async function downloadFile(parsed: ParsedSource, outPath: string) {
     subdir: parentDir === '.' ? '' : parentDir,
   });
 
-  const tmpDir = `${outPath}.git-get-tmp`;
+  const tmpDir = `${outPath}.git-gimme-tmp`;
   await rm(tmpDir, { recursive: true, force: true });
   await downloadTemplate(source, {
     dir: tmpDir,
