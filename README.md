@@ -13,29 +13,27 @@
 
 > (っᵔ◡ᵔ)っ ⭐
 
-Grab **one file** or **one folder** out of a repo. No clone, no sparse checkout, no pulling down a
-whole repository to keep four lines of config.
+Ever wanted to download a **single file** or **single folder** from a Github repo?
 
-```bash
+```sh
 git gimme unjs/giget/templates
 git gimme unjs/giget/README.md
 ```
 
 ## Install
 
-```bash
+```sh
 npm install -g git-gimme
 ```
 
-Installed globally, `git gimme` works as a native git subcommand — git dispatches unknown commands
-to `git-<name>` on PATH, so no alias or shell config is needed.
+Installed globally, `git gimme` works as a native git subcommand.
 
 ## What's new
 
 <!-- WHATSNEW:START -->
 
-| Version | Highlights                                                        |
-| ------- | ----------------------------------------------------------------- |
+| Version | Highlights                                                         |
+| ------- | ------------------------------------------------------------------ |
 | `0.2.0` | Exported function renamed to `gitGimme`; `giget` is now a peer dep |
 | `0.1.0` | Initial release — `git gimme` CLI, single-file + folder downloads  |
 
@@ -99,11 +97,11 @@ git gimme unjs/giget ./giget --ignore='*.md,*.lock'
 ## API
 
 ```ts
-import { gitGimme } from 'git-gimme';
+import { gitGimme } from "git-gimme";
 
-const { dir, files } = await gitGimme('unjs/giget/templates', {
-  dest: './vendor/templates',
-  ignore: '*.md',
+const { dir, files } = await gitGimme("unjs/giget/templates", {
+  dest: "./vendor/templates",
+  ignore: "*.md",
 });
 
 console.log(`${files} file(s) in ${dir}`);
@@ -118,17 +116,12 @@ console.log(`${files} file(s) in ${dir}`);
 
 Returns `{ dir, files }`: the resolved output path and how many files landed there.
 
-## Core
+## How it works
 
-Downloading is done by [giget](https://github.com/unjs/giget) — YAGNI 🧘‍♂️. Their page lists
-everything else that comes with it: private sources via `--auth`, GitLab / Bitbucket / Sourcehut,
-offline cache.
+Core downloading is done by [giget](https://github.com/unjs/giget) — YAGNI 🧘‍♂️. Their page lists everything else that comes with it: private sources via `--auth`, GitLab / Bitbucket / Sourcehut,
+**offline cache**.
 
-The `owner/repo/sub/dir#ref` shape above is giget's, so anything you already know transfers. On top
-of it, git-gimme adds single-file downloads and pasted GitHub URLs, resolves the default branch,
-and always reads a bare `owner/repo` as a GitHub repository.
-
-giget is a peer dependency, so if it is already installed, that copy is used.
+As giget is a peer dependency so if already installed, this package simply enhances the DX.
 
 ## Development
 
