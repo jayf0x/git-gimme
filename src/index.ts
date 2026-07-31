@@ -3,12 +3,12 @@ import path from 'node:path';
 import { downloadTemplate } from 'giget';
 import { buildGigetSource, type ParsedSource, parseSource } from './parse-source';
 
-export type GitGetOptions = {
+export type GitGimmeOptions = {
   dest?: string;
   ignore?: string;
 };
 
-export type GitGetResult = {
+export type GitGimmeResult = {
   dir: string;
   files: number;
 };
@@ -59,7 +59,7 @@ async function downloadFile(parsed: ParsedSource, outPath: string) {
   await rm(tmpDir, { recursive: true, force: true });
 }
 
-export async function gitGet(input: string, { dest, ignore }: GitGetOptions = {}): Promise<GitGetResult> {
+export async function gitGimme(input: string, { dest, ignore }: GitGimmeOptions = {}): Promise<GitGimmeResult> {
   const parsed = parseSource(input);
   parsed.ref = await resolveRef(parsed);
   const ignoreList = ignore

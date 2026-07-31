@@ -1,4 +1,4 @@
-import { gitGet } from './index';
+import { gitGimme } from './index';
 
 const args = process.argv.slice(2);
 const positional = args.filter((a) => !a.startsWith('--'));
@@ -11,7 +11,7 @@ if (!input) {
 }
 
 try {
-  const { dir, files } = await gitGet(input, {
+  const { dir, files } = await gitGimme(input, {
     dest,
     ignore: ignoreArg?.slice('--ignore='.length),
   });

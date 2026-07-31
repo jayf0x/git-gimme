@@ -13,94 +13,131 @@
 
 > (っᵔ◡ᵔ)っ ⭐
 
-`git gimme <owner/repo|github-url> [dest]` — thin wrapper around [giget](https://github.com/unjs/giget)
-that fixes the rough edges you hit downloading a single file or subfolder from GitHub.
+Grab **one file** or **one folder** out of a repo. No clone, no sparse checkout, no pulling down a
+whole repository to keep four lines of config.
 
-Install once, globally, and `git gimme` works as a native subcommand (git dispatches unrecognized
-commands to `git-<name>` on PATH — no shell config needed).
+```bash
+git gimme unjs/giget/templates
+git gimme unjs/giget/README.md
+```
+
+## Install
+
+```bash
+npm install -g git-gimme
+```
+
+Installed globally, `git gimme` works as a native git subcommand — git dispatches unknown commands
+to `git-<name>` on PATH, so no alias or shell config is needed.
 
 ## What's new
 
 <!-- WHATSNEW:START -->
 
-| Version | Highlights                                                                    |
-| ------- | ----------------------------------------------------------------------------- |
-| `0.1.0` | Initial setup — `gitGet` / `git gimme` CLI, single-file + directory downloads |
+| Version | Highlights                                                        |
+| ------- | ----------------------------------------------------------------- |
+| `0.2.0` | Exported function renamed to `gitGimme`; `giget` is now a peer dep |
+| `0.1.0` | Initial release — `git gimme` CLI, single-file + folder downloads  |
 
 <!-- WHATSNEW:END -->
 
 Full history in [CHANGELOG.md](./CHANGELOG.md).
 
-## What it fixes vs. plain giget
-
-**Bare `owner/repo` doesn't mean what you'd expect.**
-giget treats `owner/repo` as a _template registry_ lookup, not a GitHub repo — it 404s unless you
-know to prefix `github:`. git-gimme always resolves plain shorthand and pasted GitHub URLs straight
-to the GitHub provider.
-
-```
-git gimme octocat/Hello-World        # giget: 404 (looks up registry template)
-                                      # git-gimme: clones the repo
-```
-
-**Repos on `master` fail silently.**
-giget hardcodes the ref to `"main"` when you don't specify one — any repo still on `master` (or
-anything else) just 404s. git-gimme resolves the real default branch via the GitHub API first.
-
-**No way to download a single file.**
-giget's subdir matching only understands directories — pointing it at a file path matches zero tar
-entries and silently extracts nothing. git-gimme detects this and fetches the file's parent dir,
-filters down to the one file, and drops it at the destination.
-
-```
-git gimme octocat/Hello-World/README        # single file, lands as ./README
-git gimme github.com/octocat/Hello-World/blob/master/README   # same, from a pasted URL
-```
-
-**Ambiguous paths just work.**
-Given `owner/repo/some/path` with no way to know upfront if `path` is a file or a folder, git-gimme
-tries directory mode first and falls back to file mode automatically — no separate flag or syntax
-for either case.
-
-## Install
-
-```bash
-npm install -g git-gimme   # or bun add -g / pnpm add -g
-```
-
 ## Usage
 
 ```
-git gimme <owner/repo | github-url> [dest] [--ignore=pattern,pattern]
+git gimme <source> [dest] [--ignore='pattern,pattern']
 ```
 
-- `owner/repo`, `owner/repo/sub/dir`, `owner/repo/sub/dir#ref` — shorthand
-- full GitHub URLs: repo root, `/tree/<ref>/<path>`, `/blob/<ref>/<path>`
-- `--ignore=*.mp4,*.lock` — comma-separated glob excludes, forwarded to giget
+### A folder
+
+Lands as `./templates`:
+
+```bash
+git gimme unjs/giget/templates
+```
+
+### A single file
+
+Lands as `./README.md`:
+
+```bash
+git gimme unjs/giget/README.md
+```
+
+If the path could be either, git-gimme tries folder first and falls back to file.
+
+### A pasted GitHub URL
+
+Both `/tree/` and `/blob/` links work as they are:
+
+```bash
+git gimme https://github.com/unjs/giget/tree/main/templates
+git gimme https://github.com/unjs/giget/blob/main/README.md
+```
+
+### A branch, tag, or commit
+
+```bash
+git gimme 'unjs/giget/templates#v3.2.0'
+```
+
+Without a `#ref`, the repository's actual default branch is used.
+
+### Somewhere other than the current folder
+
+```bash
+git gimme unjs/giget/templates ./vendor/templates
+```
+
+### Skipping files
+
+```bash
+git gimme unjs/giget ./giget --ignore='*.md,*.lock'
+```
 
 ## API
 
 ```ts
-import { gitGet } from "git-gimme";
+import { gitGimme } from 'git-gimme';
+
+const { dir, files } = await gitGimme('unjs/giget/templates', {
+  dest: './vendor/templates',
+  ignore: '*.md',
+});
+
+console.log(`${files} file(s) in ${dir}`);
 ```
 
-### `gitGet(input, options?)`
+`gitGimme(input, options?)`
 
-| Option   | Type     | Default | What it does                                                      |
-| -------- | -------- | ------- | ----------------------------------------------------------------- |
-| `dest`   | `string` | —       | Where to write the file/folder. Defaults to the repo or basename. |
-| `ignore` | `string` | —       | Comma-separated glob excludes, forwarded to giget.                |
+| Option   | Type     | Default             | Description                        |
+| -------- | -------- | ------------------- | ---------------------------------- |
+| `dest`   | `string` | repo or path's name | Where to write the file or folder. |
+| `ignore` | `string` | —                   | Comma-separated globs to skip.     |
 
-Returns `{ dir, files }` — the resolved output path and how many files landed there.
+Returns `{ dir, files }`: the resolved output path and how many files landed there.
+
+## Core
+
+Downloading is done by [giget](https://github.com/unjs/giget) — YAGNI 🧘‍♂️. Their page lists
+everything else that comes with it: private sources via `--auth`, GitLab / Bitbucket / Sourcehut,
+offline cache.
+
+The `owner/repo/sub/dir#ref` shape above is giget's, so anything you already know transfers. On top
+of it, git-gimme adds single-file downloads and pasted GitHub URLs, resolves the default branch,
+and always reads a bare `owner/repo` as a GitHub repository.
+
+giget is a peer dependency, so if it is already installed, that copy is used.
 
 ## Development
 
 ```bash
 bun install
-bun run test        # build, then bun test against dist/
+bun run test
 bun run typecheck
-bun run build       # vite → dist/
-bun run format      # biome check --write
+bun run build
+bun run format
 ```
 
 ## License

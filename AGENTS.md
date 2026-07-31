@@ -14,7 +14,7 @@ downloads (giget only understands directories). Node/Bun only — no browser run
 - **`src/parse-source.ts`** — `parseSource` turns shorthand/URLs into `{ owner, repo, ref, subdir,
   hint }`; `buildGigetSource` turns that back into the `github:owner/repo/subdir#ref` string giget
   expects.
-- **`src/index.ts`** — `gitGet(input, options?)`: resolves the ref, then dispatches on `hint`
+- **`src/index.ts`** — `gitGimme(input, options?)`: resolves the ref, then dispatches on `hint`
   (`dir` / `file` / `auto`). `auto` (ambiguous shorthand) tries directory mode first and falls back
   to file mode if nothing came down.
 - **`src/cli.ts`** — argv parsing for the `git gimme` binary; built to `dist/cli.js` with a shebang
@@ -38,3 +38,6 @@ bun run format        # biome check --write
 - Biome for format/lint (`biome.json` → `config/biome.json`). TS strict. `config/opengrep/` holds
   vendored security-scan rules (`scripts/opengrep-scan.sh`, scans `src/` only).
 - `config/vite.config.ts` builds two entries (`index`, `cli`) and externalizes `giget` + `node:*`.
+- `giget` is a **peer** dependency (`>=3.3.0` — `ignore` landed in 3.3.0) and stays external in the
+  build, so an already-installed giget is what gets loaded at runtime. Keep it out of
+  `dependencies`.
