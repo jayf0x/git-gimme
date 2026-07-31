@@ -31,12 +31,11 @@ Installed globally, `git gimme` works as a native git subcommand.
 ## What's new
 
 <!-- WHATSNEW:START -->
-
-| Version | Highlights                                                         |
-| ------- | ------------------------------------------------------------------ |
+| Version | Highlights |
+| ------- | ---------- |
+| `1.0.0` | Download single files from GitHub without cloning entire repositories |
 | `0.2.0` | Exported function renamed to `gitGimme`; `giget` is now a peer dep |
 | `0.1.0` | Initial release — `git gimme` CLI, single-file + folder downloads  |
-
 <!-- WHATSNEW:END -->
 
 Full history in [CHANGELOG.md](./CHANGELOG.md).

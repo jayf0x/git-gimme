@@ -1,6 +1,6 @@
 {
   "name": "git-gimme",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "type": "module",
   "description": "git subcommand: download a single file or folder from a repo without a full clone",
   "author": "jayF0x",

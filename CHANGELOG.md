@@ -3,6 +3,10 @@
 All notable changes to `git-gimme`. Dates are release dates; versions follow
 [semver](https://semver.org/).
 
+## 1.0.0 — 2026-07-31
+
+- Add git gimme subcommand with giget-backed wrapper for single-file and folder downloads from GitHub
+
 ## 0.2.0 — 2026-07-31
 
 - **Breaking:** the exported function is now `gitGimme` (was `gitGet`); its option/result types are
