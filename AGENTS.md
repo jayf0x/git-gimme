@@ -32,7 +32,7 @@ bun run format        # biome check --write
 
 ## Conventions
 
-- Tests exercise the built output (`dist/cli.js`), not `src/` — `test`/`test:run` build first (see
+- Tests exercise the built output (`dist/cli.js`), not `src/` — `pretest` builds first (see
   `package.json`). `tests/e2e.test.ts` spawns real network requests against
   `jayf0x/git-gimme/tests/fixtures/`.
 - Biome for format/lint (`biome.json` → `config/biome.json`). TS strict. `config/opengrep/` holds

@@ -1,6 +1,6 @@
 {
   "name": "git-gimme",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "git subcommand: download a single file or folder from a repo without a full clone",
   "author": "jayF0x",
@@ -14,7 +14,7 @@
     }
   },
   "bin": {
-    "git-gimme": "./dist/cli.js"
+    "git-gimme": "dist/cli.js"
   },
   "peerDependencies": {
     "giget": ">=3.3.0"
@@ -29,8 +29,9 @@
     "build": "vite build --config config/vite.config.ts",
     "dev": "vite build --watch --config config/vite.config.ts",
     "typecheck": "tsc --noEmit",
-    "test": "bun run build && bun test",
-    "test:run": "bun run build && bun test",
+    "pretest": "bun run build",
+    "test": "bun test",
+    "test:run": "bun test",
     "format": "biome check --write .",
     "format:check": "biome check .",
     "scan": "bash ./scripts/opengrep-scan.sh",
